@@ -28,8 +28,12 @@ export default function Cakedetail(){
         image : cake ?.image , 
         weight : cake?.weight
     }
-    
+
     function addToCart(){
+        if (!localStorage.token){
+            alert("You have not logged in, please login")
+            return;
+        }
         axios({
             url:"http://apibyauw.eu-4.evennode.com/api"+"/addcaketocart",
             method:"post",

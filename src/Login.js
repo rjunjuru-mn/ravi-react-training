@@ -28,7 +28,8 @@ function Login(){
             localStorage.token = response.data.token;
             navigate("/");
         } else {
-            setError("********No user found*********");
+            localStorage.token = undefined;
+            setError("********No user found**********");
         }
     }, (errors) => {console.log("error = ",errors);})
     }

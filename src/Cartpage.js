@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Space ,Card,Spin} from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Login from "./Login";
 
 export default function Cartpage(){
     var [cartCakes, setCartCakes] = useState([]);
     const [loading, setLoading] = useState(true);
+    var navigate = useNavigate();
 
     useEffect(() => {
         // Simulate loading process
@@ -13,6 +15,14 @@ export default function Cartpage(){
         setLoading(false);
       }, 2000); // Simulating a 3-second loading time
 
+      callApi()
+    }, [])
+
+    function callApi(){
+        if (!localStorage.token){
+            navigate("/login");
+            return;
+        }
         axios({
             url:"http://apibyauw.eu-4.evennode.com/api"+"/cakecart",
             method:"get",
@@ -24,8 +34,7 @@ export default function Cartpage(){
         }, (error) => {
             console.log("error in cart");
         })
-    }, [])
-
+    }
     return (
         <>
         <Spin spinning={loading} size="large" />
